@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Amourfeel: chat online and make new connections</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/botui.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        html,
+        body {
+            overflow: hidden;
+        }
+    </style>
+    <script>
+        (function () {
+            var throttle = function (type, name, obj) {
+                obj = obj || window;
+                var running = false;
+                var func = function () {
+                    if (running) { return; }
+                    running = true;
+                    requestAnimationFrame(function () {
+                        obj.dispatchEvent(new CustomEvent(name));
+                        running = false;
+                    });
+                };
+                obj.addEventListener(type, func);
+            };
+
+            /* init - you can init any event */
+            throttle("resize", "optimizedResize");
+        })();
+        function setVH() {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        setVH();
+        window.addEventListener("optimizedResize", function () {
+            setVH();
+        });
+    </script>
+</head>
+
+<body>
+    <div id="form" style="display: none">
+        <div class="append-botui-actions-container">
+            <div class="">
+                <form class="botui-actions-text">
+                    <!----> <input disabled placeholder="Text here..." required="required"
+                        class="botui-actions-text-input"> <button type="submit" disabled
+                        class="botui-actions-text-submit"><svg data-v-6537f1d4="">
+                            <use data-v-6537f1d4="" xlink:href="/img/sprite.svg#message-usage"></use>
+                        </svg></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="app">
+        <div class="header">
+            <div class="header-content">
+                <div class="avatar is-inline">
+                    <span class="pic" style="background-image: url(/img/avatar.jpeg);"></span>
+                    <h4 class="name-age"> Michelle, 23 <span class="status-component"><span
+                                class="online b-sign b-sign-true"></span></span></h4>
+                </div>
+            </div>
+        </div>
+        <div class="container microservice">
+            <div class="botui-app-container" id="chat">
+                <bot-ui></bot-ui>
+            </div>
+        </div>
+    </div>
+    <script src="/js/vue.min.js"></script>
+    <script src="/js/botui.js"></script>
+    <script>
+        let name = '{{name}}'
+        function out() {
+            window.location = "https://google.com"
+        }
+        let position = 0;
+        let botui = new BotUI('chat');
+        setTimeout(function () {
+            document.getElementsByClassName('botui botui-container')[0].insertAdjacentHTML('beforeend', document.getElementById('form').innerHTML);
+        }, 100)
+
+        let start = {
+            delay: 3000,
+            loading: true,
+            content: 'Hello! Let’s get acquainted. My name is Michelle and I’m a manager at international dating service AmourFeel. What’s your name?'
+        }
+        if (position > 1) {
+            start = {
+                content: 'Hello! Let’s get acquainted. My name is Michelle and I’m a manager at international dating service AmourFeel. What’s your name?'
+            }
+        }
+
+        botui.message.bot(
+            start
+        ).then(function () {
+            return botui.action.text({
+                action: {
+                    placeholder: 'Text here...',
+                },
+            })
+        }).then(function (res) {
+            name = res.value.charAt(0).toUpperCase() + res.value.slice(1);
+            return botui.message.bot({
+                delay: 3000,
+                loading: true,
+                content: 'Nice to meet you. I’d like to tell you a bit more about our service. If you’ve ever used any other dating service, you may know that most of them are not so qualitative as you could wish.'
+            })
+        }).then(function () {
+            return botui.message.bot({
+                delay: 1000,
+                loading: true,
+                content: 'So, have you ever used a dating service?'
+            })
+        }).then(function () {
+            return botui.action.text({
+                action: {
+                    placeholder: 'Text here...',
+                },
+            })
+        }).then(function (res) {
+            return botui.message.bot({
+                delay: 4000,
+                loading: true,
+                content: 'Anyway, our service is a different story, all the women are real people who have passed a variety of verifications to become the members. That’s why the access to our service is also limited for men. Only 48% of men applied get the access. Now I would like to learn some information about you.'
+            })
+        }).then(function () {
+            return botui.message.bot({
+                delay: 3000,
+                loading: true,
+                content: 'How old are you, ' + name + '?'
+            })
+        }).then(function () {
+            return botui.action.text({
+                action: {
+                    placeholder: 'Text here...',
+                },
+            })
+        }).then(function (res) {
+            return botui.message.bot({
+                delay: 3000,
+                loading: true,
+                content: "Got it. Now let’s talk about your preferences. What feature of character you appreciate the most in women?"
+            })
+        }).then(function () {
+            return botui.action.text({
+                action: {
+                    placeholder: 'Text here...',
+                },
+            })
+        }).then(function (res) {
+            return botui.message.bot({
+                delay: 2000,
+                loading: true,
+                content: "Woman of what age are you looking for?"
+            })
+        }).then(function () {
+            return botui.action.text({
+                action: {
+                    placeholder: 'Text here...',
+                },
+            })
+        }).then(function () {
+            return botui.message.bot({
+                delay: 3000,
+                loading: true,
+                content: "Okay. The last question about your preferences, I hope u didn’t get bored. What is more important for you: appearance of personal features?"
+            })
+        }).then(function () {
+            return botui.action.text({
+                action: {
+                    placeholder: 'Text here...',
+                },
+            })
+        }).then(function () {
+            return botui.message.bot({
+                delay: 3000,
+                loading: true,
+                content: "I see. What do u expect from our service? Do you want to find a soulmate or you just want to have interesting talks with different women?"
+            })
+        }).then(function () {
+            return botui.action.text({
+                action: {
+                    placeholder: 'Text here...',
+                },
+            })
+        }).then(function () {
+            return botui.message.bot({
+                delay: 2000,
+                loading: true,
+                content: "I see. So, according to information you have provided the possibility of match is 67%"
+            })
+        }).then(function () {
+            return botui.message.bot({
+                delay: 3000,
+                loading: true,
+                content: "I congratulate you because that’s a good result. So, you are given the access and now you may register. Respect other women and enjoy our service"
+            })
+        }).then(function () {
+            return botui.action.button({
+                loading: false,
+                addMessage: false,
+                autoHide: false,
+                action: [{
+                    text: 'Registration',
+                    value: 1
+                }]
+            })
+        }).then(function () {
+            out();
+        })
+    </script>
+</body>
+
+</html>
