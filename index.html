@@ -62,10 +62,12 @@
     <div id="app">
         <div class="header">
             <div class="header-content">
+
                 <div class="avatar is-inline">
                     <span class="pic" style="background-image: url(/img/avatar.jpeg);"></span>
-                    <h4 class="name-age"> Michelle, 23 <span class="status-component"><span
+                    <h4 class="name-age"> Michelle, 35 <span class="status-component"><span
                                 class="online b-sign b-sign-true"></span></span></h4>
+                               <img src="https://m.amourfeel.com/static/svg/logos/regular/amourfeel.svg">
                 </div>
             </div>
         </div>
@@ -75,10 +77,12 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
     <script src="/js/vue.min.js"></script>
     <script src="/js/botui.js"></script>
     <script>
-        let name = '{{name}}'
+        Cookies.set('q1', "cooockie");
+        var q1 = Cookies.get('q1');
         function out() {
             window.location = "https://google.com"
         }
@@ -89,12 +93,14 @@
         }, 100)
 
         let start = {
-            delay: 3000,
-            loading: true,
-            content: 'Hello! Let’s get acquainted. My name is Michelle and I’m a manager at international dating service AmourFeel. What’s your name?'
+
+            content: ' Hello! Let’s get acquainted. My name is Michelle and I’m a manager at international dating service AmourFeel. What’s your name?'
         }
-        if (position > 1) {
+        if (q1 === undefined) {
+            Cookies.set('q1', "cooockie");
             start = {
+                delay: 3000,
+                loading: true,
                 content: 'Hello! Let’s get acquainted. My name is Michelle and I’m a manager at international dating service AmourFeel. What’s your name?'
             }
         }
@@ -102,121 +108,304 @@
         botui.message.bot(
             start
         ).then(function () {
-            return botui.action.text({
-                action: {
-                    placeholder: 'Text here...',
-                },
-            })
+            a1 = Cookies.get('a1');
+            console.log(a1);
+            if (a1 === undefined) {
+                return botui.action.text({
+                    action: {
+                        placeholder: 'Text here...',
+                    },
+                })
+            }
+            else {
+                return botui.message.human({
+                    content: a1,
+                })
+            }
+
+
         }).then(function (res) {
-            name = res.value.charAt(0).toUpperCase() + res.value.slice(1);
-            return botui.message.bot({
-                delay: 3000,
-                loading: true,
-                content: 'Nice to meet you. I’d like to tell you a bit more about our service. If you’ve ever used any other dating service, you may know that most of them are not so qualitative as you could wish.'
-            })
+            if (res != 1) {
+                Cookies.set('a1', res.value)
+                name = res.value.charAt(0).toUpperCase() + res.value.slice(1);
+                Cookies.set('name', name)
+            }
+
+            a2 = Cookies.get('a2');
+            if (a2 === undefined) {
+
+                return botui.message.bot({
+                    delay: 3000,
+                    loading: true,
+                    content: 'Nice to meet you. I’d like to tell you a bit more about our service. If you’ve ever used any other dating service, you may know that most of them are not so qualitative as you could wish.'
+                })
+            }
+            else {
+                return botui.message.bot({
+                    content: 'Nice to meet you. I’d like to tell you a bit more about our service. If you’ve ever used any other dating service, you may know that most of them are not so qualitative as you could wish.'
+                })
+            }
+
         }).then(function () {
-            return botui.message.bot({
-                delay: 1000,
-                loading: true,
-                content: 'So, have you ever used a dating service?'
-            })
+            if (a2 === undefined) {
+                return botui.message.bot({
+                    delay: 1000,
+                    loading: true,
+                    content: 'So, have you ever used a dating service?'
+                })
+            }
+            else {
+                return botui.message.bot({
+                    content: 'So, have you ever used a dating service?'
+                })
+            }
+
         }).then(function () {
-            return botui.action.text({
-                action: {
-                    placeholder: 'Text here...',
-                },
-            })
+            if (a2 === undefined) {
+                return botui.action.text({
+                    action: {
+                        placeholder: 'Text here...',
+                    },
+                })
+            }
+            else {
+                return botui.message.human({
+
+                    content: a2,
+
+                })
+            }
+
         }).then(function (res) {
-            return botui.message.bot({
-                delay: 4000,
-                loading: true,
-                content: 'Anyway, our service is a different story, all the women are real people who have passed a variety of verifications to become the members. That’s why the access to our service is also limited for men. Only 48% of men applied get the access. Now I would like to learn some information about you.'
-            })
+            if (res != 4) {
+                Cookies.set('a2', res.value);
+            }
+            a3 = Cookies.get('a3');
+            if (a3 === undefined) {
+                return botui.message.bot({
+                    delay: 4000,
+                    loading: true,
+                    content: 'Anyway, our service is a different story, all the women are real people who have passed a variety of verifications to become the members. That’s why the access to our service is also limited for men. Only 48% of men applied get the access.\n Now I would like to learn some information about you.'
+                })
+            }
+            else {
+                return botui.message.bot({
+                    content: 'Anyway, our service is a different story, all the women are real people who have passed a variety of verifications to become the members. That’s why the access to our service is also limited for men. Only 48% of men applied get the access.\n Now I would like to learn some information about you.'
+                })
+            }
         }).then(function () {
-            return botui.message.bot({
-                delay: 3000,
-                loading: true,
-                content: 'How old are you, ' + name + '?'
-            })
+            if (a3 === undefined) {
+                return botui.message.bot({
+                    delay: 3000,
+                    loading: true,
+                    content: 'How old are you, ' + name + '?'
+                })
+            }
+            else {
+                return botui.message.bot({
+                    content: 'How old are you, ' + name + '?'
+                })
+            }
+
         }).then(function () {
-            return botui.action.text({
-                action: {
-                    placeholder: 'Text here...',
-                },
-            })
+            if (a3 === undefined) {
+                return botui.action.text({
+                    action: {
+                        placeholder: 'Text here...',
+                    },
+                })
+            }
+            else {
+                return botui.message.human({
+
+                    content: a3,
+
+                })
+            }
         }).then(function (res) {
-            return botui.message.bot({
-                delay: 3000,
-                loading: true,
-                content: "Got it. Now let’s talk about your preferences. What feature of character you appreciate the most in women?"
-            })
+
+            if (res != 7) {
+                Cookies.set('a3', res.value);
+            }
+            a4 = Cookies.get('a4');
+            if (a4 === undefined) {
+                return botui.message.bot({
+                    delay: 3000,
+                    loading: true,
+                    content: "Got it. Now let’s talk about your preferences. What feature of character you appreciate the most in women?"
+                })
+            }
+            else {
+                return botui.message.bot({
+                    content: "Got it. Now let’s talk about your preferences. What feature of character you appreciate the most in women?"
+                })
+            }
         }).then(function () {
-            return botui.action.text({
-                action: {
-                    placeholder: 'Text here...',
-                },
-            })
+            if (a4 === undefined) {
+                return botui.action.text({
+                    action: {
+                        placeholder: 'Text here...',
+                    },
+                })
+            }
+            else {
+                return botui.message.human({
+
+                    content: a4,
+
+                })
+            }
         }).then(function (res) {
-            return botui.message.bot({
-                delay: 2000,
-                loading: true,
-                content: "Woman of what age are you looking for?"
-            })
+            if (res != 9) {
+                Cookies.set('a4', res.value);
+            }
+            a5 = Cookies.get('a5');
+            if (a5 === undefined) {
+                return botui.message.bot({
+                    delay: 2000,
+                    loading: true,
+                    content: "Woman of what age are you looking for?"
+                })
+            }
+            else {
+                return botui.message.bot({
+                    content: "Woman of what age are you looking for?"
+                })
+            }
         }).then(function () {
-            return botui.action.text({
-                action: {
-                    placeholder: 'Text here...',
-                },
-            })
+            if (a5 === undefined) {
+                return botui.action.text({
+                    action: {
+                        placeholder: 'Text here...',
+                    },
+                })
+            }
+            else {
+                return botui.message.human({
+
+                    content: a5,
+
+                })
+            }
+        }).then(function (res) {
+            if (res != 11) {
+                Cookies.set('a5', res.value);
+            }
+            a6 = Cookies.get('a6');
+            if (a6 === undefined) {
+                return botui.message.bot({
+                    delay: 3000,
+                    loading: true,
+                    content: "Okay. The last question about your preferences, I hope u didn’t get bored. What is more important for you: appearance of personal features?"
+                })
+            }
+            else {
+                return botui.message.bot({
+                    content: "Okay. The last question about your preferences, I hope u didn’t get bored. What is more important for you: appearance of personal features?"
+                })
+            }
         }).then(function () {
-            return botui.message.bot({
-                delay: 3000,
-                loading: true,
-                content: "Okay. The last question about your preferences, I hope u didn’t get bored. What is more important for you: appearance of personal features?"
-            })
+            if (a6 === undefined) {
+                return botui.action.text({
+                    action: {
+                        placeholder: 'Text here...',
+                    },
+                })
+            }
+            else {
+                return botui.message.human({
+
+                    content: a6,
+
+                })
+            }
+        }).then(function (res) {
+            if (res != 13) {
+                Cookies.set('a6', res.value);
+            }
+            a7 = Cookies.get('a7');
+            if (a7 === undefined) {
+                return botui.message.bot({
+                    delay: 3000,
+                    loading: true,
+                    content: "I see. What do u expect from our service? Do you want to find a soulmate or you just want to have interesting talks with different women?"
+                })
+            }
+            else {
+                return botui.message.bot({
+                    content: "I see. What do u expect from our service? Do you want to find a soulmate or you just want to have interesting talks with different women?"
+                })
+
+            }
         }).then(function () {
-            return botui.action.text({
-                action: {
-                    placeholder: 'Text here...',
-                },
-            })
-        }).then(function () {
-            return botui.message.bot({
-                delay: 3000,
-                loading: true,
-                content: "I see. What do u expect from our service? Do you want to find a soulmate or you just want to have interesting talks with different women?"
-            })
-        }).then(function () {
-            return botui.action.text({
-                action: {
-                    placeholder: 'Text here...',
-                },
-            })
-        }).then(function () {
-            return botui.message.bot({
-                delay: 2000,
-                loading: true,
-                content: "I see. So, according to information you have provided the possibility of match is 67%"
-            })
-        }).then(function () {
-            return botui.message.bot({
-                delay: 3000,
-                loading: true,
-                content: "I congratulate you because that’s a good result. So, you are given the access and now you may register. Respect other women and enjoy our service"
-            })
-        }).then(function () {
-            return botui.action.button({
-                loading: false,
-                addMessage: false,
-                autoHide: false,
-                action: [{
-                    text: 'Registration',
-                    value: 1
-                }]
-            })
-        }).then(function () {
-            out();
-        })
+            if (a7 === undefined) {
+                return botui.action.text({
+                    action: {
+                        placeholder: 'Text here...',
+                    },
+                })
+            }
+            else {
+                return botui.message.human({
+
+                    content: a7,
+
+                })}
+
+        }).then(function (res) {
+            if (res != 15) {
+                Cookies.set('a7', res.value);
+            }
+            a8 = Cookies.get('a8');
+            if (a8 === undefined) {
+                    return botui.message.bot({
+                        delay: 2000,
+                        loading: true,
+                        content: "Our algorithms are currently analyzing your Facebook Profile. Please wait a little and we’ll make a conclusion."
+                    })}
+                    else{
+                        botui.message.bot({
+                        content: "Our algorithms are currently analyzing your Facebook Profile. Please wait a little and we’ll make a conclusion."
+                    })
+                    }
+                }).then(function () {
+                    if (a8 === undefined) {
+                    return botui.message.bot({
+                        delay: 15000,
+                        loading: true,
+                        content: "Fine. Our AI has compared all the collected data with all the females’ profiles and the possibility of match is 67%."
+                    })}
+                    else{
+                        return botui.message.bot({
+                        content: "Fine. Our AI has compared all the collected data with all the females’ profiles and the possibility of match is 67%."
+                    }) 
+                    }
+                }).then(function () {
+                    if (a8 === undefined) {
+                    return botui.message.bot({
+                        delay: 3000,
+                        loading: true,
+                        content: "I congratulate you because that’s a good result. So, you are given the access and now you may register. Respect other women and enjoy our service"
+                    })}
+                    else{
+                        return botui.message.bot({
+                        content: "I congratulate you because that’s a good result. So, you are given the access and now you may register. Respect other women and enjoy our service"
+                    })
+                    }
+                }).then(function () {
+                    Cookies.set('a8', "8");
+                    return botui.action.button({
+                        loading: false,
+                        addMessage: false,
+                        autoHide: false,
+                        action: [{
+                            text: 'Registration',
+                            value: 1
+                        }]
+                    })
+                }).then(function () {
+                    out();
+                })
     </script>
 </body>
 
